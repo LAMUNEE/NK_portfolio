@@ -170,79 +170,53 @@
     <div class="step-item">
       <div class="step-num">01</div>
       <div class="step-content">
-        <div class="step-title">สมัครและรับ API Key</div>
-        <div class="step-desc">ติดต่อทีม Hinghoihome เพื่อสมัครใช้งาน API จากนั้นระบบจะออก API Key ให้กับคุณโดยเฉพาะ โดย Key ใหม่จะขึ้นต้นด้วย <code class="inline-code">sk_live_hh_</code></div>
-        <span class="step-tag">Auth Required</span>
+        <div class="step-title">ติดตั้งมิเตอร์และเกตเวย์ของHinghoihome</div>
+        <div class="step-desc">บริการนี้จะสามารถใช้ได้เมื่อคุณมีมิเตอร์และเกตเวย์ของ Hinghoihome แล้ว </div>
+        <span class="step-tag">Installation</span>
       </div>
-      <div class="code-block">
-<span class="comment"># ข้อมูลที่จะได้รับ</span>
-<span class="key">api_key</span>: <span class="str">"sk_live_hh_xxxx"</span>
-<span class="key">base_url</span>: <span class="str">"api-uat.hinghoihome.com"</span>
-      </div>
+     
     </div>
 
     <div class="step-item">
       <div class="step-num">02</div>
       <div class="step-content">
-        <div class="step-title">ตั้งค่า Authentication Header</div>
-        <div class="step-desc">ทุก Request ต้องแนบ API Key ใน Header <strong style="color:var(--text)">x-api-key</strong> เท่านั้น ห้ามใช้ <code class="inline-code">Authorization: Bearer</code> และ Key ที่ขึ้นต้นด้วย <code class="inline-code">hh_live_</code> ใช้ไม่ได้แล้ว</div>
-        <span class="step-tag">x-api-key Header</span>
+        <div class="step-title">สมัครสมาชิก Hinghoihome ประเภท API Client</div>
+        <div class="step-desc">ทุก Request ต้องแนบ API Key ใน Header <strong style="color:var(--text)">x-api-key</strong> เท่านั้น </div>
+        <span class="step-tag">Apply to Hinghoihome</span>
       </div>
-      <div class="code-block">
-<span class="comment"># Header ที่ถูกต้อง</span>
-<span class="key">"Content-Type"</span>: <span class="str">"application/json"</span>
-<span class="key">"x-api-key"</span>: <span class="str">process.env.HINGHOI_API_KEY</span>
-
-<span class="comment"># ❌ ห้ามใช้</span>
-Authorization: Bearer ...
-      </div>
+      
     </div>
 
     <div class="step-item">
       <div class="step-num">03</div>
       <div class="step-content">
-        <div class="step-title">เลือก Endpoint ที่ต้องการ</div>
-        <div class="step-desc">ใช้ POST method ไปยัง <code class="inline-code">https://api-uat.hinghoihome.com</code> พร้อมระบุ <strong style="color:var(--text)">meter_mac_address</strong> และช่วงเวลาที่ต้องการใน body</div>
-        <span class="step-tag">POST · JSON Body</span>
+        <div class="step-title">เติมเงินเข้า Wallet สำหรับซื้อ API Key</div>
+        <div class="step-desc">ทุก Request ต้องแนบ API Key ใน Header <strong style="color:var(--text)">x-api-key</strong> เท่านั้น</div>
+        <span class="step-tag">Add credits</span>
       </div>
-      <div class="code-block">
-body: JSON.stringify({
-  <span class="key">meter_mac_address</span>: <span class="str">"11:22:33:44:55:66"</span>,
-  <span class="key">lower_timestamptz</span>: <span class="str">"2026-04-01 00:00:00+07"</span>,
-  <span class="key">upper_timestamptz</span>: <span class="str">"2026-04-30 23:59:59+07"</span>,
-})
-      </div>
+      
     </div>
 
     <div class="step-item">
       <div class="step-num">04</div>
       <div class="step-content">
-        <div class="step-title">ส่ง Request และรับ Response</div>
-        <div class="step-desc">ระบบตอบกลับ JSON ที่มี <strong style="color:var(--text)">lower</strong> และ <strong style="color:var(--text)">upper</strong> เป็นค่ามิเตอร์ที่จุดเริ่มต้นและสิ้นสุด นำมาลบกันได้ค่าการใช้งาน kWh ทันที</div>
-        <span class="step-tag">JSON Response</span>
+        <div class="step-title">ส่ง Request</div>
+        <div class="step-desc">ใช้ POST method ไปยัง <code class="inline-code">https://api-uat.hinghoihome.com</code> พร้อมระบุ <strong style="color:var(--text)">meter_mac_address</strong> และช่วงเวลาที่ต้องการใน body</div>
+        <span class="step-tag">POST · JSON Body</span>
+       
+        
       </div>
-      <div class="code-block">
-{
-  <span class="key">"lower"</span>: { <span class="key">"unit_kwh"</span>: <span class="val">1200.50</span> },
-  <span class="key">"upper"</span>: { <span class="key">"unit_kwh"</span>: <span class="val">1325.90</span> }
-}
-<span class="comment">// ใช้งาน = 1325.90 - 1200.50 = 125.40 kWh</span>
-      </div>
+     
     </div>
 
     <div class="step-item">
       <div class="step-num">05</div>
       <div class="step-content">
-        <div class="step-title">จัดการ Error และ Rate Limit</div>
-        <div class="step-desc">ระบบมี Rate Limit 1,000 requests/hour ต่อ API Key หากเกินจะได้รับ Error 429 ควร implement retry logic และ exponential backoff</div>
-        <span class="step-tag">Rate Limit: 1k/hr</span>
+        <div class="step-title">รับ Response</div>
+         <div class="step-desc">ระบบตอบกลับ JSON ที่มี <strong style="color:var(--text)">lower</strong> และ <strong style="color:var(--text)">upper</strong> เป็นค่ามิเตอร์ที่จุดเริ่มต้นและสิ้นสุด นำมาลบกันได้ค่าการใช้งาน kWh ทันที</div>
+        <span class="step-tag">JSON Response</span>
       </div>
-      <div class="code-block">
-<span class="val">200</span> <span class="key">OK</span>            <span class="comment"># สำเร็จ</span>
-<span class="val">401</span> <span class="key">Unauthorized</span>  <span class="comment"># API Key ผิด</span>
-<span class="val">404</span> <span class="key">Not Found</span>     <span class="comment"># ไม่พบข้อมูล</span>
-<span class="val">429</span> <span class="key">Too Many Req</span>  <span class="comment"># เกิน Rate Limit</span>
-      </div>
+     
     </div>
 
   </div>
