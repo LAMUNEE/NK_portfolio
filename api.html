@@ -323,13 +323,13 @@ resp, _ := client.Do(req)</span>
         <input type="text" class="field-input" id="apiKey" placeholder="sk_live_hh_..." value="sk_demo_hinghoihome">
 
         <div class="field-label">Meter MAC Address</div>
-        <input type="text" class="field-input" id="meterId" placeholder="11:22:33:44:55:66" value="11:22:33:44:55:66">
+        <input type="text" class="field-input" id="meterId" placeholder="00:20:25:08:00:28" value="00:20:25:08:00:28">
 
         <div class="field-label">Lower Timestamp (เริ่มต้น)</div>
-        <input type="text" class="field-input" id="lowerTs" placeholder="2026-04-01 00:00:00+07" value="2026-04-01 00:00:00+07">
+        <input type="text" class="field-input" id="lowerTs" placeholder="2026-04-01 00:00:00+07" value="2026-06-01 00:00:00+07">
 
         <div class="field-label">Upper Timestamp (สิ้นสุด)</div>
-        <input type="text" class="field-input" id="upperTs" placeholder="2026-04-30 23:59:59+07" value="2026-04-30 23:59:59+07">
+        <input type="text" class="field-input" id="upperTs" placeholder="2026-04-30 23:59:59+07" value="2026-06-28 23:59:59+07">
 
         <div class="field-label">ช่วงเวลาตัวอย่าง</div>
         <select class="field-select" id="endpoint" onchange="fillPeriod(this.value)">
@@ -358,86 +358,6 @@ resp, _ := client.Do(req)</span>
   <div class="footer-right">PEA EasyD Co., Ltd. · v1.0.0</div>
 </footer>
 
-<script>
-const mockData = {
-  meters:  { lower: { unit_kwh: 1200.50, timestamp: "2026-04-01T00:00:00+07:00" }, upper: { unit_kwh: 1325.90, timestamp: "2026-04-30T23:59:59+07:00" } },
-  usage:   { lower: { unit_kwh: 980.20,  timestamp: "2026-03-01T00:00:00+07:00" }, upper: { unit_kwh: 1105.60, timestamp: "2026-03-31T23:59:59+07:00" } },
-  bills:   { lower: { unit_kwh: 750.00,  timestamp: "2026-02-01T00:00:00+07:00" }, upper: { unit_kwh: 862.40,  timestamp: "2026-02-28T23:59:59+07:00" } },
-  tenants: { lower: { unit_kwh: 1450.10, timestamp: "2026-05-01T00:00:00+07:00" }, upper: { unit_kwh: 1598.70, timestamp: "2026-05-31T23:59:59+07:00" } }
-};
-
-const periods = {
-  meters:  ["2026-04-01 00:00:00+07", "2026-04-30 23:59:59+07"],
-  usage:   ["2026-03-01 00:00:00+07", "2026-03-31 23:59:59+07"],
-  bills:   ["2026-02-01 00:00:00+07", "2026-02-28 23:59:59+07"],
-  tenants: ["2026-05-01 00:00:00+07", "2026-05-31 23:59:59+07"]
-};
-
-function fillPeriod(val) {
-  document.getElementById('lowerTs').value = periods[val][0];
-  document.getElementById('upperTs').value = periods[val][1];
-}
-
-function switchLang(lang, btn) {
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  ['js','curl','go'].forEach(l => {
-    const el = document.getElementById('lang-' + l);
-    if (el) el.style.display = l === lang ? 'inline' : 'none';
-  });
-}
-
-function copyCode() {
-  const code = document.getElementById('codeBlock').innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    const btn = document.querySelector('.copy-btn');
-    btn.textContent = '✓ Copied!';
-    setTimeout(() => btn.textContent = '⧉ Copy', 2000);
-  });
-}
-
-function runAPI() {
-  const key = document.getElementById('apiKey').value;
-  const ep = document.getElementById('endpoint').value;
-  const mac = document.getElementById('meterId').value;
-  const lower = document.getElementById('lowerTs').value;
-  const upper = document.getElementById('upperTs').value;
-  const statusBar = document.getElementById('statusBar');
-  const responseArea = document.getElementById('responseArea');
-
-  statusBar.innerHTML = '<span class="status-badge status-wait">⏳ กำลังส่ง Request...</span>';
-  responseArea.textContent = '// กำลังโหลด...';
-
-  setTimeout(() => {
-    if (!key || key.length < 8) {
-      statusBar.innerHTML = '<span class="status-badge status-err">401 Unauthorized</span>';
-      responseArea.textContent = JSON.stringify({ code: 401, message: "Invalid API Key — กรุณาใส่ API Key ที่ถูกต้อง" }, null, 2);
-      return;
-    }
-    const data = mockData[ep];
-    const usage = (data.upper.unit_kwh - data.lower.unit_kwh).toFixed(2);
-    const ms = Math.floor(Math.random() * 80) + 40;
-    statusBar.innerHTML = `<span class="status-badge status-200">200 OK</span><span style="font-size:12px;color:var(--muted)"> · ${ms}ms</span>`;
-    responseArea.textContent = JSON.stringify({
-      lower: data.lower,
-      upper: data.upper,
-      _meta: {
-        meter_mac_address: mac,
-        lower_timestamptz: lower,
-        upper_timestamptz: upper,
-        usage_kwh: parseFloat(usage),
-        note: `การใช้งาน = ${data.upper.unit_kwh} - ${data.lower.unit_kwh} = ${usage} kWh`
-      }
-    }, null, 2);
-  }, 800);
-}
-
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
-  });
-});
-</script>
+<script src="js/script.js"></script>
 </body>
 </html>
