@@ -419,7 +419,7 @@
         Why <em>Dev Pool?</em>
       </h2>
       <p class="about-text">
-          ฉันทำงานอยู่กับ Hinghoihome มากกว่า 3 ปี ได้สัมผัสทั้งฝั่ง Business และ Technical ตั้งแต่ออกแบบ UX วางแผน Feature ไปจนถึงประสานงานกับ Developer และ Vendor เพื่อให้ Product ออกมาตรงกับความต้องการของตลาด
+          ฉันทำงานอยู่กับ Hinghoihome มากกว่า 2 ปี ได้สัมผัสทั้งฝั่ง Business และ Technical ตั้งแต่ออกแบบ UX วางแผน Feature ไปจนถึงประสานงานกับ Developer และ Vendor เพื่อให้ Product ออกมาตรงกับความต้องการของตลาด
         </p>
         <p class="about-text">
           ฉันยังมองเห็นช่องว่างที่ตัวเองควรพัฒนาในฐานะผู้พัฒนา Product Hinghoihome การได้มีโอกาสเข้าร่วมโครงการในครั้งนี้จึงเป็นโอกาสที่ดีมากสำหรับฉัน
@@ -502,7 +502,8 @@
   </div>
 
   <div class="projects-grid">
-    <a href="#" class="project-card large" data-cat="product">
+    <a href="api.html" class="project-card large" data-cat="product">
+    
       <div class="project-thumb thumb-1">
         <div class="thumb-accent"></div>
         <div class="project-thumb-inner">⚡</div>
@@ -512,8 +513,8 @@
           <span class="project-cat">Product Design</span>
           <span class="project-year">2024</span>
         </div>
-        <div class="project-name">Hinghoihome — Smart Meter Platform</div>
-        <div class="project-desc">IoT billing system for dormitories. Full product design from research to launch — covering tenant dashboards, billing flows, and real-time analytics.</div>
+        <div class="project-name">Hinghoihome — API Connection</div>
+        <div class="project-desc">New Product!! of Hinghoihome สำหรับกลุ่มธุรกิจที่ต้องการเชื่อมค่าจากมิเตอร์เข้าสู่ Plateform ของคุณ</div>
         <div class="project-tags">
           <span class="project-tag">IoT</span>
           <span class="project-tag">Dashboard</span>
@@ -589,12 +590,12 @@
     <p class="contact-subtitle">Open to freelance projects, full-time roles, and interesting conversations. Don't be a stranger.</p>
   </div>
   <div class="contact-links">
-    <a href="mailto:hello@portfolio.com" class="contact-link">
+    <a href="mailto:koonsawat.kamon@gmail.com" class="contact-link">
       <div class="contact-link-left">
         <div class="contact-icon">✉</div>
         <div>
           <div class="contact-link-name">Email</div>
-          <div class="contact-link-sub">hello@portfolio.com</div>
+          <div class="contact-link-sub">koonsawat.kamon@gmail.com</div>
         </div>
       </div>
       <span class="arrow">↗</span>
@@ -639,25 +640,6 @@
   <a href="#" class="footer-scroll-top">↑</a>
 </footer>
 
-<script>
-function filterWork(btn, cat) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.project-card').forEach(card => {
-    if (cat === 'all' || card.dataset.cat === cat) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
-
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
-  });
-});
-</script>
+<script src="js/script.js"></script>
 </body>
 </html>

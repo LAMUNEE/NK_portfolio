@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hinghoihome API Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0E0E0E; --bg2: #161616; --bg3: #1E1E1E; --bg4: #252525;
+    --text: #F0EDE6; --muted: #888; --accent: #C8F04B;
+    --border: rgba(255,255,255,0.08); --radius: 16px; --code-bg: #111;
+    --px: 48px;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px var(--px); border-bottom: 1px solid var(--border);
+    background: rgba(14,14,14,0.92); backdrop-filter: blur(12px);
+  }
+  .nav-logo { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 300; color: var(--text); text-decoration: none; }
+  .nav-logo span { color: var(--accent); }
+  .nav-back { color: var(--muted); font-size: 13px; text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--text); }
+  .nav-badge { background: var(--accent); color: #0E0E0E; padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+
+  /* HERO */
+  .hero { padding: 112px var(--px) 56px; max-width: 1100px; margin: 0 auto; text-align: center; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--bg3); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px; font-size: 12px; color: var(--muted); margin-bottom: 28px; }
+  .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .hero-title { font-family: 'Fraunces', serif; font-size: clamp(36px, 5vw, 60px); font-weight: 300; letter-spacing: -2px; line-height: 1.1; margin-bottom: 18px; }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-desc { font-size: 15px; color: var(--muted); max-width: 520px; margin: 0 auto 36px; line-height: 1.8; }
+  .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: #0E0E0E; padding: 12px 24px; border-radius: 100px; font-size: 14px; font-weight: 500; text-decoration: none; border: none; cursor: pointer; transition: opacity 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 12px 24px; border-radius: 100px; font-size: 14px; text-decoration: none; cursor: pointer; font-family: 'Inter', sans-serif; transition: border-color 0.2s; white-space: nowrap; }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.3); }
+
+  /* SHARED */
+  .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 40px; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .code-block { background: var(--code-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; font-family: 'Courier New', monospace; font-size: 12px; color: #aaa; line-height: 1.75; overflow-x: auto; }
+  .code-block .key { color: #7ec8e3; }
+  .code-block .val { color: #C8F04B; }
+  .code-block .str { color: #f1a66a; }
+  .code-block .comment { color: #555; }
+  .inline-code { background: var(--bg3); border: 1px solid var(--border); padding: 2px 7px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 12px; color: var(--accent); }
+
+  /* STEPS */
+  .steps-section { max-width: 1100px; margin: 0 auto; padding: 0 var(--px) 72px; }
+  .steps-grid { display: flex; flex-direction: column; }
+  .step-item { display: grid; grid-template-columns: 56px 1fr 300px; gap: 24px; align-items: start; padding: 28px 0; border-bottom: 1px solid var(--border); }
+  .step-item:first-child { border-top: 1px solid var(--border); }
+  .step-num { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 300; color: var(--bg4); line-height: 1; letter-spacing: -2px; transition: color 0.3s; padding-top: 4px; }
+  .step-item:hover .step-num { color: var(--accent); }
+  .step-title { font-size: 17px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
+  .step-desc { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  .step-tag { display: inline-block; margin-top: 10px; background: var(--bg3); border: 1px solid var(--border); border-radius: 100px; padding: 3px 12px; font-size: 11px; color: var(--muted); }
+
+  /* DOCS */
+  .docs-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .docs-inner { max-width: 1100px; margin: 0 auto; padding: 56px var(--px); }
+  .lang-tabs { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin-bottom: 0; }
+  .lang-label { font-size: 11px; letter-spacing: 0.1em; color: var(--muted); margin-right: 16px; white-space: nowrap; }
+  .lang-btn { background: transparent; border: none; color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; padding: 10px 14px; cursor: pointer; font-family: 'Inter', sans-serif; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .lang-btn:hover { color: var(--text); }
+  .lang-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .lang-divider { height: 1px; background: var(--border); margin-bottom: 40px; }
+  .api-ref-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; align-items: start; }
+  .auth-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-family: 'Courier New', monospace; font-size: 13px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .auth-key { color: var(--muted); }
+  .auth-val { color: var(--accent); }
+  .code-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .code-header-label { font-size: 11px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+  .copy-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--muted); font-size: 12px; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+  .copy-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .api-code { min-height: 300px; font-size: 13px; }
+
+  /* PLAYGROUND */
+  .playground-section { max-width: 1100px; margin: 0 auto; padding: 56px var(--px); }
+  .playground-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .playground-header { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .playground-title { font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; flex-shrink: 0; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .playground-body { display: grid; grid-template-columns: 1fr 1fr; }
+  .playground-left { padding: 24px; border-right: 1px solid var(--border); }
+  .playground-right { padding: 24px; }
+  .field-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+  .field-input { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; color: var(--text); font-size: 13px; font-family: 'Courier New', monospace; margin-bottom: 14px; transition: border-color 0.2s; }
+  .field-input:focus { outline: none; border-color: var(--accent); }
+  .field-select { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; color: var(--text); font-size: 13px; margin-bottom: 14px; cursor: pointer; -webkit-appearance: none; }
+  .run-btn { width: 100%; background: var(--accent); color: #0E0E0E; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity 0.2s; margin-top: 4px; }
+  .run-btn:hover { opacity: 0.85; }
+  .response-area { background: var(--code-bg); border-radius: 8px; padding: 14px; font-family: 'Courier New', monospace; font-size: 12px; color: #aaa; line-height: 1.8; min-height: 260px; white-space: pre-wrap; word-break: break-all; border: 1px solid var(--border); }
+  .response-status { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .status-badge { padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 500; }
+  .status-200 { background: rgba(200,240,75,0.15); color: var(--accent); }
+  .status-err { background: rgba(220,50,50,0.15); color: #f07070; }
+  .status-wait { background: rgba(255,255,255,0.05); color: var(--muted); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 24px var(--px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .footer-left { font-size: 13px; color: var(--muted); }
+  .footer-left a { color: var(--accent); text-decoration: none; }
+  .footer-right { font-size: 12px; color: #555; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    :root { --px: 28px; }
+    .step-item { grid-template-columns: 44px 1fr; }
+    .step-item .code-block { display: none; }
+    .api-ref-grid { grid-template-columns: 1fr; }
+    .api-code { min-height: auto; }
+  }
+
+  @media (max-width: 640px) {
+    :root { --px: 16px; }
+    nav { padding: 14px 16px; }
+    .nav-logo { font-size: 15px; }
+    .nav-back { font-size: 12px; }
+    .hero { padding-top: 90px; padding-bottom: 40px; }
+    .hero-title { letter-spacing: -1px; }
+    .hero-actions { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-outline { width: 100%; max-width: 280px; text-align: center; }
+    .step-item { grid-template-columns: 36px 1fr; gap: 14px; padding: 20px 0; }
+    .step-num { font-size: 30px; }
+    .step-title { font-size: 15px; }
+    .step-desc { font-size: 13px; }
+    .lang-tabs { gap: 0; }
+    .lang-btn { padding: 8px 10px; font-size: 11px; }
+    .playground-body { grid-template-columns: 1fr; }
+    .playground-left { border-right: none; border-bottom: 1px solid var(--border); }
+    .playground-right { padding-top: 20px; }
+    footer { flex-direction: column; text-align: center; padding: 20px 16px; }
+    .auth-box { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-back">← Portfolio</a>
+  <a href="index.html" class="nav-logo">Hinghoihome <span>API</span></a>
+  <span class="nav-badge">v1.0</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow"><span></span> Developer Documentation</div>
+  <h1 class="hero-title">เชื่อมต่อ <em>API</em><br>ของ Hinghoihome</h1>
+  <p class="hero-desc">5 ขั้นตอนง่ายๆ สำหรับการเชื่อมต่อระบบมิเตอร์อัจฉริยะเข้ากับแพลตฟอร์มของคุณ</p>
+  <div class="hero-actions">
+    <a href="#playground" class="btn-primary">ทดลองใช้ API →</a>
+    <a href="#docs" class="btn-outline">ดู Documentation</a>
+  </div>
+</div>
+
+<!-- STEPS -->
+<div class="steps-section">
+  <div class="section-label">5 ขั้นตอน</div>
+  <div class="steps-grid">
+
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-title">สมัครและรับ API Key</div>
+        <div class="step-desc">ติดต่อทีม Hinghoihome เพื่อสมัครใช้งาน API จากนั้นระบบจะออก API Key ให้กับคุณโดยเฉพาะ โดย Key ใหม่จะขึ้นต้นด้วย <code class="inline-code">sk_live_hh_</code></div>
+        <span class="step-tag">Auth Required</span>
+      </div>
+      <div class="code-block">
+<span class="comment"># ข้อมูลที่จะได้รับ</span>
+<span class="key">api_key</span>: <span class="str">"sk_live_hh_xxxx"</span>
+<span class="key">base_url</span>: <span class="str">"api-uat.hinghoihome.com"</span>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-title">ตั้งค่า Authentication Header</div>
+        <div class="step-desc">ทุก Request ต้องแนบ API Key ใน Header <strong style="color:var(--text)">x-api-key</strong> เท่านั้น ห้ามใช้ <code class="inline-code">Authorization: Bearer</code> และ Key ที่ขึ้นต้นด้วย <code class="inline-code">hh_live_</code> ใช้ไม่ได้แล้ว</div>
+        <span class="step-tag">x-api-key Header</span>
+      </div>
+      <div class="code-block">
+<span class="comment"># Header ที่ถูกต้อง</span>
+<span class="key">"Content-Type"</span>: <span class="str">"application/json"</span>
+<span class="key">"x-api-key"</span>: <span class="str">process.env.HINGHOI_API_KEY</span>
+
+<span class="comment"># ❌ ห้ามใช้</span>
+Authorization: Bearer ...
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-title">เลือก Endpoint ที่ต้องการ</div>
+        <div class="step-desc">ใช้ POST method ไปยัง <code class="inline-code">https://api-uat.hinghoihome.com</code> พร้อมระบุ <strong style="color:var(--text)">meter_mac_address</strong> และช่วงเวลาที่ต้องการใน body</div>
+        <span class="step-tag">POST · JSON Body</span>
+      </div>
+      <div class="code-block">
+body: JSON.stringify({
+  <span class="key">meter_mac_address</span>: <span class="str">"11:22:33:44:55:66"</span>,
+  <span class="key">lower_timestamptz</span>: <span class="str">"2026-04-01 00:00:00+07"</span>,
+  <span class="key">upper_timestamptz</span>: <span class="str">"2026-04-30 23:59:59+07"</span>,
+})
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <div class="step-title">ส่ง Request และรับ Response</div>
+        <div class="step-desc">ระบบตอบกลับ JSON ที่มี <strong style="color:var(--text)">lower</strong> และ <strong style="color:var(--text)">upper</strong> เป็นค่ามิเตอร์ที่จุดเริ่มต้นและสิ้นสุด นำมาลบกันได้ค่าการใช้งาน kWh ทันที</div>
+        <span class="step-tag">JSON Response</span>
+      </div>
+      <div class="code-block">
+{
+  <span class="key">"lower"</span>: { <span class="key">"unit_kwh"</span>: <span class="val">1200.50</span> },
+  <span class="key">"upper"</span>: { <span class="key">"unit_kwh"</span>: <span class="val">1325.90</span> }
+}
+<span class="comment">// ใช้งาน = 1325.90 - 1200.50 = 125.40 kWh</span>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <div class="step-title">จัดการ Error และ Rate Limit</div>
+        <div class="step-desc">ระบบมี Rate Limit 1,000 requests/hour ต่อ API Key หากเกินจะได้รับ Error 429 ควร implement retry logic และ exponential backoff</div>
+        <span class="step-tag">Rate Limit: 1k/hr</span>
+      </div>
+      <div class="code-block">
+<span class="val">200</span> <span class="key">OK</span>            <span class="comment"># สำเร็จ</span>
+<span class="val">401</span> <span class="key">Unauthorized</span>  <span class="comment"># API Key ผิด</span>
+<span class="val">404</span> <span class="key">Not Found</span>     <span class="comment"># ไม่พบข้อมูล</span>
+<span class="val">429</span> <span class="key">Too Many Req</span>  <span class="comment"># เกิน Rate Limit</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DOCS -->
+<div class="docs-section" id="docs">
+  <div class="docs-inner">
+    <div class="section-label">API Reference</div>
+    <p style="color:var(--muted); font-size:14px; margin-bottom:28px;">Query electricity meter usage from host-owned Hinghoihome meters.</p>
+
+    <div class="lang-tabs">
+      <span class="lang-label">LANGUAGE:</span>
+      <button class="lang-btn" onclick="switchLang('curl', this)">CURL</button>
+      <button class="lang-btn active" onclick="switchLang('js', this)">JAVASCRIPT</button>
+      <button class="lang-btn" onclick="switchLang('go', this)">GO</button>
+    </div>
+    <div class="lang-divider"></div>
+
+    <div class="api-ref-grid">
+      <div class="api-ref-left">
+        <h3 style="font-size:17px; font-weight:600; color:var(--text); margin-bottom:12px;">Authentication</h3>
+        <p style="font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:18px;">
+          Include the generated API key in the <code class="inline-code">x-api-key</code> header.
+          Do not send Public API keys with <code class="inline-code">Authorization: Bearer</code>.
+        </p>
+        <div class="auth-box">
+          <span class="auth-key">x-api-key:</span>
+          <span class="auth-val">sk_live_hh_...</span>
+        </div>
+        <p style="font-size:13px; color:var(--muted); margin-top:14px; line-height:1.7;">
+          Old local keys that begin with <code class="inline-code">hh_live_</code> are no longer valid.
+          Create a new key before testing.
+        </p>
+      </div>
+
+      <div class="api-ref-right">
+        <div class="code-header">
+          <span class="code-header-label">ENDPOINT REQUEST</span>
+          <button class="copy-btn" onclick="copyCode()">⧉ Copy</button>
+        </div>
+        <div class="code-block api-code" id="codeBlock">
+<span id="lang-js"><span class="comment">// JavaScript</span>
+const response = await fetch(<span class="str">"https://api-uat.hinghoihome.com/v1/meter/usage"</span>, {
+  method: <span class="str">"POST"</span>,
+  headers: {
+    <span class="str">"Content-Type"</span>: <span class="str">"application/json"</span>,
+    <span class="str">"x-api-key"</span>: process.env.HINGHOI_API_KEY,
+  },
+  body: JSON.stringify({
+    meter_mac_address: <span class="str">"11:22:33:44:55:66"</span>,
+    lower_timestamptz: <span class="str">"2026-04-01 00:00:00+07"</span>,
+    upper_timestamptz: <span class="str">"2026-04-30 23:59:59+07"</span>,
+  }),
+});
+const body = await response.json();
+
+if (!response.ok) {
+  throw new Error(`${body.code}: ${body.message}`);
+}
+
+console.log(body.lower.unit_kwh, body.upper.unit_kwh);</span><span id="lang-curl" style="display:none"><span class="comment"># cURL</span>
+curl -X POST <span class="str">"https://api-uat.hinghoihome.com/v1/meter/usage"</span> \
+  -H <span class="str">"Content-Type: application/json"</span> \
+  -H <span class="str">"x-api-key: sk_live_hh_..."</span> \
+  -d <span class="str">'{
+    "meter_mac_address": "11:22:33:44:55:66",
+    "lower_timestamptz": "2026-04-01 00:00:00+07",
+    "upper_timestamptz": "2026-04-30 23:59:59+07"
+  }'</span></span><span id="lang-go" style="display:none"><span class="comment">// Go</span>
+payload := map[string]string{
+  <span class="str">"meter_mac_address"</span>: <span class="str">"11:22:33:44:55:66"</span>,
+  <span class="str">"lower_timestamptz"</span>: <span class="str">"2026-04-01 00:00:00+07"</span>,
+  <span class="str">"upper_timestamptz"</span>: <span class="str">"2026-04-30 23:59:59+07"</span>,
+}
+body, _ := json.Marshal(payload)
+req, _ := http.NewRequest(<span class="str">"POST"</span>,
+  <span class="str">"https://api-uat.hinghoihome.com/v1/meter/usage"</span>,
+  bytes.NewBuffer(body))
+req.Header.Set(<span class="str">"x-api-key"</span>, os.Getenv(<span class="str">"HINGHOI_API_KEY"</span>))
+req.Header.Set(<span class="str">"Content-Type"</span>, <span class="str">"application/json"</span>)
+client := &http.Client{}
+resp, _ := client.Do(req)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYGROUND -->
+<div class="playground-section" id="playground">
+  <div class="section-label">API Playground</div>
+  <div class="playground-wrap">
+    <div class="playground-header">
+      <div class="playground-title">
+        <span class="live-dot"></span>
+        ทดลองเรียก API
+      </div>
+      <span style="font-size:12px; color:var(--muted);">Simulated Response</span>
+    </div>
+    <div class="playground-body">
+      <div class="playground-left">
+        <div class="field-label">API Key</div>
+        <input type="text" class="field-input" id="apiKey" placeholder="sk_live_hh_..." value="sk_demo_hinghoihome">
+
+        <div class="field-label">Meter MAC Address</div>
+        <input type="text" class="field-input" id="meterId" placeholder="11:22:33:44:55:66" value="11:22:33:44:55:66">
+
+        <div class="field-label">Lower Timestamp (เริ่มต้น)</div>
+        <input type="text" class="field-input" id="lowerTs" placeholder="2026-04-01 00:00:00+07" value="2026-04-01 00:00:00+07">
+
+        <div class="field-label">Upper Timestamp (สิ้นสุด)</div>
+        <input type="text" class="field-input" id="upperTs" placeholder="2026-04-30 23:59:59+07" value="2026-04-30 23:59:59+07">
+
+        <div class="field-label">ช่วงเวลาตัวอย่าง</div>
+        <select class="field-select" id="endpoint" onchange="fillPeriod(this.value)">
+          <option value="meters">เมษายน 2026</option>
+          <option value="usage">มีนาคม 2026</option>
+          <option value="bills">กุมภาพันธ์ 2026</option>
+          <option value="tenants">พฤษภาคม 2026</option>
+        </select>
+
+        <button class="run-btn" onclick="runAPI()">▶ ส่ง Request</button>
+      </div>
+      <div class="playground-right">
+        <div class="field-label">Response</div>
+        <div class="response-status" id="statusBar">
+          <span class="status-badge status-wait">— รอการเรียก API</span>
+        </div>
+        <div class="response-area" id="responseArea">// กด "ส่ง Request" เพื่อดูผลลัพธ์</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">Hinghoihome API Docs — <a href="index.html">← กลับหน้า Portfolio</a></div>
+  <div class="footer-right">PEA EasyD Co., Ltd. · v1.0.0</div>
+</footer>
+
+<script>
+const mockData = {
+  meters:  { lower: { unit_kwh: 1200.50, timestamp: "2026-04-01T00:00:00+07:00" }, upper: { unit_kwh: 1325.90, timestamp: "2026-04-30T23:59:59+07:00" } },
+  usage:   { lower: { unit_kwh: 980.20,  timestamp: "2026-03-01T00:00:00+07:00" }, upper: { unit_kwh: 1105.60, timestamp: "2026-03-31T23:59:59+07:00" } },
+  bills:   { lower: { unit_kwh: 750.00,  timestamp: "2026-02-01T00:00:00+07:00" }, upper: { unit_kwh: 862.40,  timestamp: "2026-02-28T23:59:59+07:00" } },
+  tenants: { lower: { unit_kwh: 1450.10, timestamp: "2026-05-01T00:00:00+07:00" }, upper: { unit_kwh: 1598.70, timestamp: "2026-05-31T23:59:59+07:00" } }
+};
+
+const periods = {
+  meters:  ["2026-04-01 00:00:00+07", "2026-04-30 23:59:59+07"],
+  usage:   ["2026-03-01 00:00:00+07", "2026-03-31 23:59:59+07"],
+  bills:   ["2026-02-01 00:00:00+07", "2026-02-28 23:59:59+07"],
+  tenants: ["2026-05-01 00:00:00+07", "2026-05-31 23:59:59+07"]
+};
+
+function fillPeriod(val) {
+  document.getElementById('lowerTs').value = periods[val][0];
+  document.getElementById('upperTs').value = periods[val][1];
+}
+
+function switchLang(lang, btn) {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['js','curl','go'].forEach(l => {
+    const el = document.getElementById('lang-' + l);
+    if (el) el.style.display = l === lang ? 'inline' : 'none';
+  });
+}
+
+function copyCode() {
+  const code = document.getElementById('codeBlock').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = '⧉ Copy', 2000);
+  });
+}
+
+function runAPI() {
+  const key = document.getElementById('apiKey').value;
+  const ep = document.getElementById('endpoint').value;
+  const mac = document.getElementById('meterId').value;
+  const lower = document.getElementById('lowerTs').value;
+  const upper = document.getElementById('upperTs').value;
+  const statusBar = document.getElementById('statusBar');
+  const responseArea = document.getElementById('responseArea');
+
+  statusBar.innerHTML = '<span class="status-badge status-wait">⏳ กำลังส่ง Request...</span>';
+  responseArea.textContent = '// กำลังโหลด...';
+
+  setTimeout(() => {
+    if (!key || key.length < 8) {
+      statusBar.innerHTML = '<span class="status-badge status-err">401 Unauthorized</span>';
+      responseArea.textContent = JSON.stringify({ code: 401, message: "Invalid API Key — กรุณาใส่ API Key ที่ถูกต้อง" }, null, 2);
+      return;
+    }
+    const data = mockData[ep];
+    const usage = (data.upper.unit_kwh - data.lower.unit_kwh).toFixed(2);
+    const ms = Math.floor(Math.random() * 80) + 40;
+    statusBar.innerHTML = `<span class="status-badge status-200">200 OK</span><span style="font-size:12px;color:var(--muted)"> · ${ms}ms</span>`;
+    responseArea.textContent = JSON.stringify({
+      lower: data.lower,
+      upper: data.upper,
+      _meta: {
+        meter_mac_address: mac,
+        lower_timestamptz: lower,
+        upper_timestamptz: upper,
+        usage_kwh: parseFloat(usage),
+        note: `การใช้งาน = ${data.upper.unit_kwh} - ${data.lower.unit_kwh} = ${usage} kWh`
+      }
+    }, null, 2);
+  }, 800);
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
