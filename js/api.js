@@ -5,11 +5,11 @@ const API_URL = "/api/meter-usage";
 
 
 async function fetchUsage(mac, lower, upper) {
-  const response = await fetch(API_URL, {
+  const response = await fetch("/api/meter-usage", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": API_KEY,
+      // ไม่ต้องส่ง x-api-key แล้ว server จัดการให้
     },
     body: JSON.stringify({
       meter_mac_address: mac,
