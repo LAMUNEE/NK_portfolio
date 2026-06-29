@@ -230,9 +230,9 @@
 
     <div class="lang-tabs">
       <span class="lang-label">LANGUAGE:</span>
-      <button class="lang-btn" onclick="switchLang('curl', this)">CURL</button>
+      
       <button class="lang-btn active" onclick="switchLang('js', this)">JAVASCRIPT</button>
-      <button class="lang-btn" onclick="switchLang('go', this)">GO</button>
+      
     </div>
     <div class="lang-divider"></div>
 
@@ -259,26 +259,26 @@
           <button class="copy-btn" onclick="copyCode()">⧉ Copy</button>
         </div>
         <div class="code-block api-code" id="codeBlock">
-<span id="lang-js"><span class="comment">// JavaScript</span>
+<span id="lang-js"><span class="comment">// JavaScript</span><br>
 const response = await fetch(<span class="str">"https://api-uat.hinghoihome.com/v1/meter/usage"</span>, {
-  method: <span class="str">"POST"</span>,
-  headers: {
-    <span class="str">"Content-Type"</span>: <span class="str">"application/json"</span>,
-    <span class="str">"x-api-key"</span>: process.env.HINGHOI_API_KEY,
-  },
-  body: JSON.stringify({
-    meter_mac_address: <span class="str">"11:22:33:44:55:66"</span>,
-    lower_timestamptz: <span class="str">"2026-04-01 00:00:00+07"</span>,
-    upper_timestamptz: <span class="str">"2026-04-30 23:59:59+07"</span>,
-  }),
-});
-const body = await response.json();
+  <br>method: <span class="str">"POST"</span>,
+  <br>headers: {
+    <br><span class="str">"Content-Type"</span>: <span class="str">"application/json"</span>,
+    <br><span class="str">"x-api-key"</span>: process.env.HINGHOI_API_KEY,
+  <br>},
+  <br>body: JSON.stringify({
+   <br>meter_mac_address: <span class="str">"11:22:33:44:55:66"</span>,
+    <br>lower_timestamptz: <span class="str">"2026-04-01 00:00:00+07"</span>,
+    <br>upper_timestamptz: <span class="str">"2026-04-30 23:59:59+07"</span>,
+  <br>}),
+<br>});
+<br>const body = await response.json();
 
-if (!response.ok) {
-  throw new Error(`${body.code}: ${body.message}`);
-}
+<br>if (!response.ok) {
+  <br>throw new Error(`${body.code}: ${body.message}`);
+<br>}
 
-console.log(body.lower.unit_kwh, body.upper.unit_kwh);</span><span id="lang-curl" style="display:none"><span class="comment"># cURL</span>
+<br>console.log(body.lower.unit_kwh, body.upper.unit_kwh);</span><span id="lang-curl" style="display:none"><span class="comment"># cURL</span>
 curl -X POST <span class="str">"https://api-uat.hinghoihome.com/v1/meter/usage"</span> \
   -H <span class="str">"Content-Type: application/json"</span> \
   -H <span class="str">"x-api-key: sk_live_hh_..."</span> \
