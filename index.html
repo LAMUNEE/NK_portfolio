@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +18,27 @@
     --border: rgba(255,255,255,0.08);
     --radius: 16px;
   }
+
+  [data-theme="light"] {
+    --bg: #F8F6F1;
+    --bg2: #EFEDE6;
+    --bg3: #E4E1D8;
+    --text: #1A1A1A;
+    --muted: #666;
+    --accent: #5A8A00;
+    --border: rgba(0,0,0,0.1);
+  }
+  [data-theme="light"] nav { background: rgba(248,246,241,0.9); }
+
+  body { transition: background 0.3s, color 0.3s; }
+  .theme-toggle {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--muted); width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
   body {
     background: var(--bg);
@@ -349,7 +370,10 @@
     <a href="#work" class="active">Work</a>
     <a href="#contact">Contact</a>
   </div>
-  <a href="#contact" class="nav-cta">Available for work</a>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" id="themeBtn">☀</button>
+    <a href="#contact" class="nav-cta">Available for work</a>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -492,13 +516,8 @@
 <!-- WORK -->
 <div class="work-section" id="work">
   <div class="work-header">
-    <h2 class="work-title">Selected <em>work</em></h2>
-    <div class="work-filter">
-      <button class="filter-btn active" onclick="filterWork(this, 'all')">All</button>
-      <button class="filter-btn" onclick="filterWork(this, 'product')">Product</button>
-      <button class="filter-btn" onclick="filterWork(this, 'brand')">Brand</button>
-      <button class="filter-btn" onclick="filterWork(this, 'web')">Web</button>
-    </div>
+    <h2 class="work-title">API <em>Hinghoihome</em></h2>
+    
   </div>
 
   <div class="projects-grid">
@@ -524,63 +543,6 @@
       </div>
     </a>
 
-    <a href="#" class="project-card small" data-cat="brand">
-      <div class="project-thumb thumb-2">
-        <div class="thumb-accent"></div>
-        <div class="project-thumb-inner">✦</div>
-      </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span class="project-cat">Brand Identity</span>
-          <span class="project-year">2023</span>
-        </div>
-        <div class="project-name">Billmate — Brand System</div>
-        <div class="project-desc">Visual identity and design system for a smart billing product.</div>
-        <div class="project-tags">
-          <span class="project-tag">Branding</span>
-          <span class="project-tag">Design System</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="#" class="project-card small" data-cat="web">
-      <div class="project-thumb thumb-3">
-        <div class="thumb-accent"></div>
-        <div class="project-thumb-inner">◈</div>
-      </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span class="project-cat">Web Design</span>
-          <span class="project-year">2023</span>
-        </div>
-        <div class="project-name">Landing Page Redesign</div>
-        <div class="project-desc">A/B tested redesign that increased conversion 78% for a SaaS product.</div>
-        <div class="project-tags">
-          <span class="project-tag">Landing Page</span>
-          <span class="project-tag">A/B Test</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="#" class="project-card large" data-cat="product">
-      <div class="project-thumb thumb-4">
-        <div class="thumb-accent"></div>
-        <div class="project-thumb-inner">◎</div>
-      </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span class="project-cat">Product Design</span>
-          <span class="project-year">2022</span>
-        </div>
-        <div class="project-name">Analytics Dashboard — My Power</div>
-        <div class="project-desc">Energy consumption visualization for apartment tenants. Designed with accessibility and data clarity as primary constraints.</div>
-        <div class="project-tags">
-          <span class="project-tag">Data Viz</span>
-          <span class="project-tag">Analytics</span>
-          <span class="project-tag">Accessibility</span>
-        </div>
-      </div>
-    </a>
   </div>
 </div>
 
@@ -642,5 +604,6 @@
 </footer>
 
 <script src="js/script.js"></script>
+
 </body>
 </html>

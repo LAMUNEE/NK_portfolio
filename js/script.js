@@ -1,3 +1,32 @@
+// API  Script
+
+const API_URL = "https://api-uat.hinghoihome.com/public/api/v1/get-electric-usage";
+const API_KEY = "HINGHOI_API_KEY";
+
+
+// Dark Mode Toggle
+
+  (function() {
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+    document.getElementById('themeBtn').textContent = saved === 'dark' ? '☀' : '◑';
+  })();
+
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    document.getElementById('themeBtn').textContent = next === 'dark' ? '☀' : '◑';
+  }
+
+
+
+
+
+
+// Filter Work Section
 function filterWork(btn, cat) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -18,17 +47,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 
-// API  Script
 
-const API_URL = 'https://api-uat.hinghoihome.com/public/api/v1/get-electric-usage';
-const API_KEY = "YOUR_API_KEY_HERE";
-
-const periods = {
-  meters:  ["2026-06-01 00:00:00+07", "2026-06-28 23:59:59+07"],
-  usage:   ["2026-03-01 00:00:00+07", "2026-03-31 23:59:59+07"],
-  bills:   ["2026-02-01 00:00:00+07", "2026-02-28 23:59:59+07"],
-  tenants: ["2026-05-01 00:00:00+07", "2026-05-31 23:59:59+07"]
-};
+// API Hinghoihome Functions
 
 function fillPeriod(val) {
   document.getElementById('lowerTs').value = periods[val][0];
