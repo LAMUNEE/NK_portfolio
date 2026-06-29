@@ -1,10 +1,7 @@
 
-const API_URL = "https://api-uat.hinghoihome.com/public/api/v1/get-electric-usage";
-const API_KEY = "YOUR_API_KEY_HERE"
+const API_URL = "/api/meter-usage";
+
 // API Hinghoihome Functions
-
-
-
 
 
 async function fetchUsage(mac, lower, upper) {
