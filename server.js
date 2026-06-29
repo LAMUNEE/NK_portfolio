@@ -1,4 +1,5 @@
 // ─── Server.js — Hinghoihome Portfolio API Proxy ──────────────────────────────
+require('dotenv').config();
 const express = require("express");
 const fetch   = require("node-fetch");
 const path    = require("path");
@@ -64,3 +65,5 @@ app.get("/{*splat}", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+require('dotenv').config();

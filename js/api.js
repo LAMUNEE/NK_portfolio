@@ -21,6 +21,9 @@ async function fetchUsage(mac, lower, upper) {
   const body = await response.json();
 
   if (!response.ok) {
+    console.log('Error response:', body);
+    console.log('code:', body.code);
+    console.log('message:', body.message);
     throw new Error(`${body.code}: ${body.message}`);
   }
 
@@ -76,9 +79,4 @@ async function runAPI() {
   }
 }
 
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
-  });
-});
+
